@@ -1,17 +1,25 @@
 
+
 provider "aws" {
 
-    region = local.region_name
-    profile = local.profile_name
+    region = "us-east-1"
+    profile = "demo_aws"
   
 }
 
 resource "aws_s3_bucket" "aws_s3_bucket_demo" {
 
-    bucket = "demos3bucketusingterraform"
-    tags = {
-        project_type = local.project_type
-    }
+   for_each = local.s3_bucket_names
+
+   bucket = each.key 
+
+   versioning {
+    enabled = local.s3_bucket_configs[each.key].versioning
+   }
+
+   tags = {
+    project_type = local.s3_bucket_configs[each.key].project_type
+   }
   
 }
 
