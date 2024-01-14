@@ -1,16 +1,17 @@
 
 provider "aws" {
 
-    region = local.region_name
-    profile = local.profile_name
+    region = var.region_var
+    profile = var.profile_var
   
 }
 
+
 resource "aws_s3_bucket" "aws_s3_bucket_demo" {
 
-    bucket = "demos3bucketusingterraform"
+    bucket = var.bucket_name_var
     tags = {
-        project_type = local.project_type
+        project_type = "demo"
     }
   
 }
